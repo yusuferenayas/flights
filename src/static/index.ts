@@ -1,0 +1,3 @@
+const publicImages = {};
+
+export { publicImages };
