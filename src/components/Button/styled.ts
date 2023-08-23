@@ -5,38 +5,47 @@ import { ButtonVariantType } from ".";
 import { colors } from "src/styles";
 
 export const BaseButtonStyles = css`
-  padding: 0px;
   border-radius: 4px;
   text-align: center;
   color: white;
   cursor: pointer;
+  padding: 16px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 export const PrimaryButtonStyles = css`
   background-color: ${colors.secondary};
-  padding: 16px;
+`;
+
+export const TransparentButtonStyles = css`
+  background-color: transparent;
+  border: 1px solid white;
 `;
 
 type ButtonProps = {
-  variant: ButtonVariantType;
-  fullWidth?: boolean;
-  disabled?: boolean;
+  $variant?: ButtonVariantType;
+  $disabled?: boolean;
 };
 
 export const ButtonStyles = css<ButtonProps>`
   ${BaseButtonStyles}
 
-  ${({ variant }) => {
-    switch (variant) {
+  ${({ $variant }) => {
+    switch ($variant) {
       case "primary":
         return PrimaryButtonStyles;
+
+      case "transparent":
+        return TransparentButtonStyles;
 
       default:
         break;
     }
   }}
 
-  display: ${({ fullWidth }) => (fullWidth ? "flex" : "inline-flex")};
   justify-content: center;
   align-items: center;
 
@@ -46,8 +55,8 @@ export const ButtonStyles = css<ButtonProps>`
     pointer-events: none;
   }
 
-  ${({ disabled }) =>
-    disabled &&
+  ${({ $disabled }) =>
+    $disabled &&
     css`
       opacity: 0.5;
       cursor: not-allowed;
@@ -64,7 +73,6 @@ export const Button = styled.button<ButtonProps>`
 export const ButtonLink = styled(Link)<ButtonProps>`
   ${ButtonStyles};
   text-decoration: none;
-  padding: 0;
 
   img {
     margin-bottom: -6px;

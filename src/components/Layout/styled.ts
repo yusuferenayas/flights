@@ -1,12 +1,22 @@
 import styled from "styled-components";
 import { colors } from "src/styles";
 
-export const Wrap = styled.div<{ homeBg?: boolean }>`
+export const Wrap = styled.div<{ $homeBg?: boolean }>`
   display: flex;
   flex-direction: column;
   min-height: 100%;
 
-  background-color: ${({ homeBg }) => (homeBg ? colors.homeBg : colors.bodyBg)};
+  background-color: ${({ $homeBg }) =>
+    $homeBg ? colors.homeBg : colors.bodyBg};
+
+  header {
+    border-color: ${({ $homeBg }) => ($homeBg ? "white" : colors.textGray)};
+
+    h3 {
+      color: ${({ $homeBg }) =>
+        $homeBg ? colors.textAlternative : colors.textGray};
+    }
+  }
 `;
 
 export const Main = styled.main`

@@ -98,5 +98,20 @@ const GlobalStyle = createGlobalStyle`
   b {
     font-weight: 700;
   }
+
+  body .MuiFormControlLabel-label {
+    color: #aaa;
+  }
+
+  body .MuiFormControlLabel-label {
+    font-size: 16px;
+    line-height: normal;
+  } 
+
+  sup {
+    display: inline-block;
+    font-size: 12px;
+    transform: translateY(-6px);
+  }
 `;
 export default GlobalStyle;

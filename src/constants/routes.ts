@@ -1,10 +1,9 @@
-const externalRoutes = {
-  twitter: 'https://twitter.com/',
-}
-
 const routes = {
-  index: '/',
-  about: '/about',
-}
+  index: "/",
+  about: "/about",
+};
+const apiRoutes = {
+  flights: "api/flights",
+};
 
-export { externalRoutes, routes }
+export { routes, apiRoutes };

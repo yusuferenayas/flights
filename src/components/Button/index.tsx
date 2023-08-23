@@ -2,11 +2,10 @@ import React from "react";
 
 import * as S from "./styled";
 
-export type ButtonVariantType = "primary";
+export type ButtonVariantType = "primary" | "transparent";
 
 type Props = {
   variant?: ButtonVariantType;
-  fullWidth?: boolean;
   icon?: React.ReactNode;
   loading?: boolean;
 } & React.HTMLProps<HTMLButtonElement>;
@@ -19,7 +18,7 @@ const Button: React.FC<Props> = ({
   ...props
 }) => {
   return (
-    <S.Button variant={variant} {...(props as any)}>
+    <S.Button $variant={variant} $disabled={props.disabled} {...(props as any)}>
       {icon}
       <span>{children}</span>
     </S.Button>

@@ -95,11 +95,6 @@ export const PassengerPanel = styled.div`
     color: #aaa;
   }
 
-  .MuiFormControlLabel-label {
-    font-size: 16px;
-    line-height: normal;
-  }
-
   .MuiFormGroup-root {
     flex-direction: row;
     justify-content: space-between;

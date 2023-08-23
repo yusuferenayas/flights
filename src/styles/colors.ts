@@ -6,6 +6,7 @@ const colors = {
 
   text: "black",
   textAlternative: "white",
+  textGray: "#707070",
 
   // accent colors
   homeBg: "#063048",

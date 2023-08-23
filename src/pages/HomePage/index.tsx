@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
@@ -11,6 +11,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import GroupsIcon from "@mui/icons-material/Groups";
 
+import { PassengerClass } from "src/@types/PassengerClass";
 import { useOutsideClick } from "src/hooks/useOnClickOutside";
 import Button from "src/components/Button";
 import Layout from "src/components/Layout";
@@ -18,17 +19,28 @@ import { H1, H2, H4, P } from "src/components/Typography";
 import { InputTextField } from "src/components/Input/styled";
 
 import * as S from "./styled";
-
-enum PassengerClass {
-  Economy,
-  Business,
-}
+import { useApiClient } from "src/api";
+import { IFlightData } from "src/model/FlightModel";
 
 const HomePage: NextPage = () => {
+  const { fetchFlights } = useApiClient();
   const [showPassengerPanel, setShowPassengerPanel] = useState(false);
   const [passengerCount, setPassengerCount] = useState<number>(1);
   const [selectedPassengerClass, setSelectedPassengerClass] =
     useState<PassengerClass>(PassengerClass.Economy);
+  const [flightData, setFlightData] = useState<IFlightData | undefined>();
+
+  useEffect(() => {
+    const getFlightsData = async () => {
+      const response = await fetchFlights();
+
+      if (response) {
+        setFlightData(response);
+      }
+    };
+
+    getFlightsData();
+  }, []);
 
   const passengerPanelRef = useOutsideClick(() => {
     setShowPassengerPanel(false);
