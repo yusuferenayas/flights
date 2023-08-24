@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,8 @@ import { InputTextField } from "src/components/Input/styled";
 import { useFlightsData } from "src/hooks/useFlightsData";
 import { routes } from "src/constants/routes";
 import { notifyError } from "src/utils/notification";
+import { PASSENGER_COUNT_STORAGE_KEY } from "src/constants/config";
+import { getLocalStorage, setLocalStorage } from "src/utils/localStorage";
 
 import { FlightListPageQueryParams } from "../FlightListPage";
 
@@ -54,6 +56,15 @@ const HomePage: NextPage = () => {
     setShowPassengerPanel(false);
   });
 
+  useEffect(() => {
+    // Local storage management
+    const savedPassengerCount = getLocalStorage(PASSENGER_COUNT_STORAGE_KEY);
+
+    if (savedPassengerCount) {
+      setPassengerCount(Number(savedPassengerCount));
+    }
+  }, []);
+
   const handleChange =
     (selectedClass: PassengerClass) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +95,8 @@ const HomePage: NextPage = () => {
     });
 
     if (isRoutesValid) {
+      setLocalStorage(PASSENGER_COUNT_STORAGE_KEY, passengerCount.toString());
+
       router.push({
         pathname: routes.flightList,
         query: {
