@@ -7,5 +7,5 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<IFlightData>
 ) {
-  res.status(200).json(flights);
+  res.status(200).json(flights as IFlightData);
 }
