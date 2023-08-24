@@ -1,6 +1,6 @@
 const routes = {
   index: "/",
-  about: "/about",
+  flightList: "/flight-list",
 };
 const apiRoutes = {
   flights: "api/flights",

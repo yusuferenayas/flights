@@ -28,6 +28,7 @@ export const TransparentButtonStyles = css`
 type ButtonProps = {
   $variant?: ButtonVariantType;
   $disabled?: boolean;
+  $selected?: boolean;
 };
 
 export const ButtonStyles = css<ButtonProps>`
@@ -43,6 +44,12 @@ export const ButtonStyles = css<ButtonProps>`
 
       default:
         break;
+    }
+  }}
+
+  ${({ $selected }) => {
+    if ($selected) {
+      return `background-color: ${colors.secondary};`;
     }
   }}
 

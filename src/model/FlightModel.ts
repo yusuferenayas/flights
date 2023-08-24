@@ -1,26 +1,26 @@
 export interface IFlightData {
-  flights: Flight[];
+  flights: IFlight[];
 }
 
-export interface Flight {
-  originAirport: OriginAirport;
-  destinationAirport: OriginAirport;
+export interface IFlight {
+  originAirport: IOriginAirport;
+  destinationAirport: IOriginAirport;
   arrivalDateTimeDisplay: string;
   departureDateTimeDisplay: string;
   flightDuration: string;
-  fareCategories: FareCategories;
+  fareCategories: IFareCategories;
 }
 
-export interface FareCategories {
+export interface IFareCategories {
   BUSINESS?: {
-    subcategories: Subcategory[];
+    subcategories: ISubCategory[];
   };
   ECONOMY?: {
-    subcategories: Subcategory[];
+    subcategories: ISubCategory[];
   };
 }
 
-interface Subcategory {
+interface ISubCategory {
   brandCode: string;
   price: {
     amount: number;
@@ -31,14 +31,14 @@ interface Subcategory {
   rights: string[];
 }
 
-interface OriginAirport {
+interface IOriginAirport {
   name: string;
   code: string;
-  city: City;
-  country: City;
+  city: ICity;
+  country: ICity;
 }
 
-interface City {
+interface ICity {
   code: string;
   name: string;
 }

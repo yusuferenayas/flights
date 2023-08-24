@@ -4,7 +4,7 @@ import { colors, fontFamily } from "src/styles";
 
 export const InputTextField = styled(TextField)`
   background: white;
-  border-radius: 10px;
+  border-radius: 4px;
   width: 100%;
 
   .MuiInputBase-input {
@@ -34,8 +34,6 @@ export const InputTextField = styled(TextField)`
   }
 
   .MuiOutlinedInput-root.Mui-error {
-    border-bottom: 1px solid #a71919;
-    border-bottom-right-radius: 16px;
-    border-bottom-left-radius: 16px;
+    border: 2px solid red;
   }
 `;

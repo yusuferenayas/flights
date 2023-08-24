@@ -6,9 +6,6 @@ export const Wrap = styled.div<{ $homeBg?: boolean }>`
   flex-direction: column;
   min-height: 100%;
 
-  background-color: ${({ $homeBg }) =>
-    $homeBg ? colors.homeBg : colors.bodyBg};
-
   header {
     border-color: ${({ $homeBg }) => ($homeBg ? "white" : colors.textGray)};
 
@@ -19,7 +16,10 @@ export const Wrap = styled.div<{ $homeBg?: boolean }>`
   }
 `;
 
-export const Main = styled.main`
+export const Main = styled.main<{ $homeBg?: boolean }>`
   flex: 1;
   padding: 12px;
+
+  background-color: ${({ $homeBg }) =>
+    $homeBg ? colors.homeBg : colors.bodyBg};
 `;

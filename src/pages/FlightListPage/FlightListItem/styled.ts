@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const FlighListItem = styled.div`
+  margin-bottom: 32px;
+
   .MuiFormGroup-root {
     flex-direction: row;
     height: 100%;
@@ -14,6 +16,7 @@ const FlightListCardStyles = css`
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
 `;
 
 export const FlightInformation = styled.div`
@@ -56,6 +59,7 @@ export const FlightPriceTable = styled.div`
   padding: 16px;
   background: white;
   position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
 
   > svg {
     position: absolute;

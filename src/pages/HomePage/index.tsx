@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { NextPage } from "next";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FlightLandIcon from "@mui/icons-material/FlightLand";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -17,30 +19,35 @@ import Button from "src/components/Button";
 import Layout from "src/components/Layout";
 import { H1, H2, H4, P } from "src/components/Typography";
 import { InputTextField } from "src/components/Input/styled";
+import { useFlightsData } from "src/hooks/useFlightsData";
 
+import {
+  AirportSelectionFormSchema,
+  AirportSelectionFormType,
+  airportSelectionFormDefaultValues,
+} from "./form.type";
 import * as S from "./styled";
-import { useApiClient } from "src/api";
-import { IFlightData } from "src/model/FlightModel";
+import { useRouter } from "next/router";
+import { FlightListPageQueryParams } from "../FlightListPage";
+import { routes } from "src/constants/routes";
+import { notifyError } from "src/utils/notification";
 
 const HomePage: NextPage = () => {
-  const { fetchFlights } = useApiClient();
+  const { checkRoutesValid } = useFlightsData();
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AirportSelectionFormType>({
+    resolver: yupResolver(AirportSelectionFormSchema),
+    defaultValues: airportSelectionFormDefaultValues,
+  });
+
   const [showPassengerPanel, setShowPassengerPanel] = useState(false);
   const [passengerCount, setPassengerCount] = useState<number>(1);
   const [selectedPassengerClass, setSelectedPassengerClass] =
     useState<PassengerClass>(PassengerClass.Economy);
-  const [flightData, setFlightData] = useState<IFlightData | undefined>();
-
-  useEffect(() => {
-    const getFlightsData = async () => {
-      const response = await fetchFlights();
-
-      if (response) {
-        setFlightData(response);
-      }
-    };
-
-    getFlightsData();
-  }, []);
 
   const passengerPanelRef = useOutsideClick(() => {
     setShowPassengerPanel(false);
@@ -66,6 +73,29 @@ const HomePage: NextPage = () => {
     }
   };
 
+  const handleFormSubmit = async ({
+    originAirport,
+    destinationAirport,
+  }: AirportSelectionFormType) => {
+    const isRoutesValid = checkRoutesValid({
+      originAirport,
+      destinationAirport,
+    });
+
+    if (isRoutesValid) {
+      router.push({
+        pathname: routes.flightList,
+        query: {
+          originAirport,
+          destinationAirport,
+          passengerCount,
+        } as FlightListPageQueryParams,
+      });
+    } else {
+      notifyError("Please select valid origin/destination locations !!");
+    }
+  };
+
   return (
     <Layout homeBg>
       <section>
@@ -73,18 +103,22 @@ const HomePage: NextPage = () => {
           <H1>Merhaba</H1>
           <H2>Nereyi keşfetmek istersiniz?</H2>
           <S.FlightFormWrap>
-            <S.FlightForm>
+            <S.FlightForm onSubmit={handleSubmit(handleFormSubmit)}>
               <InputTextField
                 placeholder="Nereden"
                 InputProps={{
                   startAdornment: <FlightTakeoffIcon />,
                 }}
+                error={!!errors?.originAirport}
+                {...register("originAirport")}
               />
               <InputTextField
                 placeholder="Nereye"
                 InputProps={{
                   startAdornment: <FlightLandIcon />,
                 }}
+                error={!!errors?.destinationAirport}
+                {...register("destinationAirport")}
               />
               <InputTextField
                 disabled

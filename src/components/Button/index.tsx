@@ -8,6 +8,7 @@ type Props = {
   variant?: ButtonVariantType;
   icon?: React.ReactNode;
   loading?: boolean;
+  selected?: boolean;
 } & React.HTMLProps<HTMLButtonElement>;
 
 const Button: React.FC<Props> = ({
@@ -15,10 +16,16 @@ const Button: React.FC<Props> = ({
   variant = "primary",
   icon,
   loading,
+  selected,
   ...props
 }) => {
   return (
-    <S.Button $variant={variant} $disabled={props.disabled} {...(props as any)}>
+    <S.Button
+      $variant={variant}
+      $disabled={props.disabled}
+      $selected={selected}
+      {...(props as any)}
+    >
       {icon}
       <span>{children}</span>
     </S.Button>

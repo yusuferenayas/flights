@@ -1,4 +1,4 @@
 export enum PassengerClass {
-  Economy,
-  Business,
+  Economy = "ECONOMY",
+  Business = "BUSINESS",
 }

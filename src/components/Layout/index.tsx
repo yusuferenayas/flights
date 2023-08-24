@@ -11,9 +11,9 @@ type Props = PropsWithChildren<{ homeBg?: boolean }>;
 
 const Layout: React.FC<Props> = ({ children, homeBg }) => {
   return (
-    <S.Wrap $homeBg={homeBg}> 
+    <S.Wrap $homeBg={homeBg}>
       <Header />
-      <S.Main>
+      <S.Main $homeBg={homeBg}>
         <Container>{children}</Container>
       </S.Main>
       <Footer />
