@@ -128,10 +128,12 @@ const FlighListItem: React.FC<Props> = ({
                   />
                   <S.FlightPrice>
                     <P>Yolcu başına</P>
-                    <H3>
+                    <H4>
                       TRY{" "}
-                      {fareCategories.ECONOMY?.subcategories[0].price.amount}
-                    </H3>
+                      {getEcoFlyCalculatedPrice(
+                        fareCategories.ECONOMY?.subcategories[0].price.amount!
+                      )}
+                    </H4>
                   </S.FlightPrice>
                 </S.FlightClass>
               </Grid>
@@ -146,10 +148,12 @@ const FlighListItem: React.FC<Props> = ({
                   />
                   <S.FlightPrice>
                     <P>Yolcu başına</P>
-                    <H3>
+                    <H4>
                       TRY{" "}
-                      {fareCategories.BUSINESS?.subcategories[0].price.amount}
-                    </H3>
+                      {getEcoFlyCalculatedPrice(
+                        fareCategories.BUSINESS?.subcategories[0].price.amount!
+                      )}
+                    </H4>
                   </S.FlightPrice>
                 </S.FlightClass>
               </Grid>

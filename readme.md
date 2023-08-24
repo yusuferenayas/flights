@@ -1,5 +1,9 @@
 # Flights Project
 
+## Demo
+
+https://flights-git-main-yusuferenayas.vercel.app/
+
 ## Folder Structure
 
 - `pages/` - contains all app pages
