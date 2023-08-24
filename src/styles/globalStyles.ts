@@ -113,5 +113,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 12px;
     transform: translateY(-6px);
   }
+
+  section {
+    padding: 50px 0;
+  }
 `;
+
 export default GlobalStyle;

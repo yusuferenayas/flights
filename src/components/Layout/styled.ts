@@ -8,6 +8,8 @@ export const Wrap = styled.div<{ $homeBg?: boolean }>`
 
   header {
     border-color: ${({ $homeBg }) => ($homeBg ? "white" : colors.textGray)};
+    background-color: ${({ $homeBg }) =>
+      $homeBg ? colors.homeBg : colors.bodyBg};
 
     h3 {
       color: ${({ $homeBg }) =>

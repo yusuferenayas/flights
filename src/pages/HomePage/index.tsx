@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
@@ -20,6 +21,10 @@ import Layout from "src/components/Layout";
 import { H1, H2, H4, P } from "src/components/Typography";
 import { InputTextField } from "src/components/Input/styled";
 import { useFlightsData } from "src/hooks/useFlightsData";
+import { routes } from "src/constants/routes";
+import { notifyError } from "src/utils/notification";
+
+import { FlightListPageQueryParams } from "../FlightListPage";
 
 import {
   AirportSelectionFormSchema,
@@ -27,10 +32,6 @@ import {
   airportSelectionFormDefaultValues,
 } from "./form.type";
 import * as S from "./styled";
-import { useRouter } from "next/router";
-import { FlightListPageQueryParams } from "../FlightListPage";
-import { routes } from "src/constants/routes";
-import { notifyError } from "src/utils/notification";
 
 const HomePage: NextPage = () => {
   const { checkRoutesValid } = useFlightsData();

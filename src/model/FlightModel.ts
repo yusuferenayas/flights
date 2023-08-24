@@ -1,3 +1,5 @@
+import { ResultStatus } from "src/@types/ResultStatus";
+
 export interface IFlightData {
   flights: IFlight[];
 }
@@ -27,7 +29,7 @@ interface ISubCategory {
     currency: string;
   };
   order: number;
-  status: string;
+  status: ResultStatus;
   rights: string[];
 }
 

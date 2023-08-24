@@ -65,9 +65,11 @@ export const ButtonStyles = css<ButtonProps>`
   ${({ $disabled }) =>
     $disabled &&
     css`
-      opacity: 0.5;
+      opacity: 0.25;
       cursor: not-allowed;
       pointer-events: none;
+      background: #bbb;
+      color: #333;
     `};
 `;
 

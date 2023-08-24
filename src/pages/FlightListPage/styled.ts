@@ -20,9 +20,20 @@ export const PromoSwitchWrap = styled.div`
   display: flex;
   align-items: center;
   padding-top: 40px;
+  flex-wrap: wrap;
 
   h4 {
     padding-right: 15px;
+  }
+
+  p {
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: ${colors.text};
+    padding: 40px 0 0;
+    line-height: 16px;
   }
 `;
 

@@ -70,10 +70,20 @@ const FlightListPage: NextPage = () => {
         <S.FlightListPageWrap>
           <S.FlightListTitleWrap>
             <P>Uçuş</P>
-            <H3>İstanbul - Antalya, 6 Yolcu</H3>
+            <H3>
+              {originAirport} - {destinationAirport}, {passengerCount} Yolcu
+            </H3>
             <S.PromoSwitchWrap>
               <H4>Promosyon Kodu</H4>
               <Switch checked={promoCodeCheck} onChange={handlePromoChange} />
+              <P>
+                Promosyon Kodu seçeneği ile tüm Economy kabini Eco Fly
+                paketlerini %50 indirimle satın alabilirsiniz!
+                <br />
+                <br />
+                Promosyon Kodu seçeneği aktifken Eco fly paketi haricinde seçim
+                yapılamamaktadır.
+              </P>
             </S.PromoSwitchWrap>
           </S.FlightListTitleWrap>
           <S.FlighListWrap>
@@ -102,6 +112,7 @@ const FlightListPage: NextPage = () => {
                   index={index}
                   isSelectedFlight={selectedFlight === index}
                   handleSelectFlight={handleSelectFlight}
+                  promoCodeCheck={promoCodeCheck}
                 />
               ))}
             </S.FlighList>

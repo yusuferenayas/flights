@@ -4,11 +4,15 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { useRouter } from "next/router";
 
 import { PassengerClass } from "src/@types/PassengerClass";
 import { H3, H4, P } from "src/components/Typography";
 import Button from "src/components/Button";
 import { IFlight } from "src/model/FlightModel";
+import { routes } from "src/constants/routes";
+import { ResultPageQueryParams } from "src/pages/ResultPage";
+import { ResultStatus } from "src/@types/ResultStatus";
 
 import * as S from "./styled";
 
@@ -17,6 +21,7 @@ type Props = {
   index: number;
   isSelectedFlight: boolean;
   handleSelectFlight: (index: number) => void;
+  promoCodeCheck: boolean;
 };
 
 const FlighListItem: React.FC<Props> = ({
@@ -24,7 +29,11 @@ const FlighListItem: React.FC<Props> = ({
   isSelectedFlight,
   handleSelectFlight,
   index,
+  promoCodeCheck,
 }) => {
+  const router = useRouter();
+  const { passengerCount } = router.query;
+
   const {
     arrivalDateTimeDisplay,
     departureDateTimeDisplay,
@@ -37,6 +46,16 @@ const FlighListItem: React.FC<Props> = ({
   const [selectedPassengerClass, setSelectedPassengerClass] =
     useState<PassengerClass | null>(null);
 
+  const selectedFareCategory = selectedPassengerClass
+    ? fareCategories[selectedPassengerClass]
+    : undefined;
+
+  useEffect(() => {
+    if (!isSelectedFlight) {
+      setSelectedPassengerClass(null);
+    }
+  }, [isSelectedFlight]);
+
   const handleChange =
     (selectedClass: PassengerClass) =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,11 +64,30 @@ const FlighListItem: React.FC<Props> = ({
 
   const handleOnSelectFlight = () => handleSelectFlight(index);
 
-  useEffect(() => {
-    if (!isSelectedFlight) {
-      setSelectedPassengerClass(null);
+  const getEcoFlyCalculatedPrice = (price: number) => {
+    if (promoCodeCheck) {
+      return price / 2;
     }
-  }, [isSelectedFlight]);
+
+    return price;
+  };
+
+  const onSubmit = (status: ResultStatus, price: number) => (e: any) => {
+    if (status === ResultStatus.AVAILABLE) {
+      const calculatedPricePerPassenger = promoCodeCheck ? price / 2 : price;
+      const totalPrice = Number(passengerCount) * calculatedPricePerPassenger;
+
+      router.push({
+        pathname: routes.result,
+        query: { status, price: totalPrice } as ResultPageQueryParams,
+      });
+    } else {
+      router.push({
+        pathname: routes.result,
+        query: { status } as ResultPageQueryParams,
+      });
+    }
+  };
 
   return (
     <S.FlighListItem>
@@ -119,7 +157,7 @@ const FlighListItem: React.FC<Props> = ({
           </RadioGroup>
         </Grid>
       </Grid>
-      {selectedPassengerClass !== null && isSelectedFlight && (
+      {selectedFareCategory && isSelectedFlight && (
         <S.FlightPriceTable>
           <ArrowDropUpIcon />
           <Grid container spacing={2}>
@@ -129,20 +167,24 @@ const FlighListItem: React.FC<Props> = ({
                   <H3>EcoFly</H3>
                   <H3>
                     <sup>TRY</sup>{" "}
-                    {
-                      fareCategories[selectedPassengerClass]?.subcategories[0]
-                        .price.amount
-                    }
+                    {getEcoFlyCalculatedPrice(
+                      selectedFareCategory.subcategories[0].price.amount
+                    )}
                   </H3>
                 </div>
                 <div>
-                  {fareCategories[
-                    selectedPassengerClass
-                  ]?.subcategories[0].rights.map((right) => (
+                  {selectedFareCategory.subcategories[0].rights.map((right) => (
                     <P>{right}</P>
                   ))}
                 </div>
-                <Button>Uçuşunu Seç</Button>
+                <Button
+                  onClick={onSubmit(
+                    selectedFareCategory.subcategories[0].status,
+                    selectedFareCategory.subcategories[0].price.amount
+                  )}
+                >
+                  Uçuşunu Seç
+                </Button>
               </S.FlightPriceTableItem>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -151,20 +193,23 @@ const FlighListItem: React.FC<Props> = ({
                   <H3>ExtraFly</H3>
                   <H3>
                     <sup>TRY</sup>{" "}
-                    {
-                      fareCategories[selectedPassengerClass]?.subcategories[1]
-                        .price.amount
-                    }
+                    {selectedFareCategory.subcategories[1].price.amount}
                   </H3>
                 </div>
                 <div>
-                  {fareCategories[
-                    selectedPassengerClass
-                  ]?.subcategories[1].rights.map((right) => (
+                  {selectedFareCategory.subcategories[1].rights.map((right) => (
                     <P>{right}</P>
                   ))}
                 </div>
-                <Button>Uçuşunu Seç</Button>
+                <Button
+                  onClick={onSubmit(
+                    selectedFareCategory.subcategories[1].status,
+                    selectedFareCategory.subcategories[1].price.amount
+                  )}
+                  disabled={promoCodeCheck}
+                >
+                  Uçuşunu Seç
+                </Button>
               </S.FlightPriceTableItem>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -173,20 +218,23 @@ const FlighListItem: React.FC<Props> = ({
                   <H3>PrimeFly</H3>
                   <H3>
                     <sup>TRY</sup>{" "}
-                    {
-                      fareCategories[selectedPassengerClass]?.subcategories[2]
-                        .price.amount
-                    }
+                    {selectedFareCategory.subcategories[2].price.amount}
                   </H3>
                 </div>
                 <div>
-                  {fareCategories[
-                    selectedPassengerClass
-                  ]?.subcategories[2].rights.map((right) => (
+                  {selectedFareCategory.subcategories[2].rights.map((right) => (
                     <P>{right}</P>
                   ))}
                 </div>
-                <Button>Uçuşunu Seç</Button>
+                <Button
+                  onClick={onSubmit(
+                    selectedFareCategory.subcategories[2].status,
+                    selectedFareCategory.subcategories[2].price.amount
+                  )}
+                  disabled={promoCodeCheck}
+                >
+                  Uçuşunu Seç
+                </Button>
               </S.FlightPriceTableItem>
             </Grid>
           </Grid>

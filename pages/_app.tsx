@@ -45,6 +45,13 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     getFlightsData();
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const loader = document.getElementById("globalLoader");
+      if (loader) loader.style.display = "none";
+    }
+  }, []);
+
   if (state.loading) {
     return <FullPageLoader />;
   }

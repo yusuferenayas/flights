@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { colors } from "src/styles";
 
 export const FullPageLoaderWrap = styled.div`
   position: absolute;
@@ -7,7 +6,7 @@ export const FullPageLoaderWrap = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  background: ${colors.primary};
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
