@@ -3,7 +3,6 @@ import { PropsWithChildren } from "react";
 import Container from "@mui/material/Container";
 
 import Header from "../Header";
-import Footer from "../Footer";
 
 import * as S from "./styled";
 
@@ -16,7 +15,6 @@ const Layout: React.FC<Props> = ({ children, homeBg }) => {
       <S.Main $homeBg={homeBg}>
         <Container>{children}</Container>
       </S.Main>
-      <Footer />
     </S.Wrap>
   );
 };

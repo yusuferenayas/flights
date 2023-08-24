@@ -106,7 +106,9 @@ const HomePage: NextPage = () => {
         } as FlightListPageQueryParams,
       });
     } else {
-      notifyError("Please select valid origin/destination locations !!");
+      notifyError(
+        "Lütfen geçerli rotalarımızdan arama yapınız! (ipucu: başlangıçtaki değerler)"
+      );
     }
   };
 

@@ -6,7 +6,11 @@ import { CircularProgress } from "@mui/material";
 const FullPageLoader = () => {
   return (
     <S.FullPageLoaderWrap>
-      <CircularProgress size={75} color="error" />
+      <CircularProgress
+        size={75}
+        color="error"
+        data-testid="full-page-loader"
+      />
     </S.FullPageLoaderWrap>
   );
 };
